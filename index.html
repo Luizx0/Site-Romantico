@@ -104,6 +104,37 @@
       header{ gap:8px }
       .counter{ width:100% }
     }
+
+    @media (max-width: 480px){
+  body{ padding:16px; }
+
+  header{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .note{ 
+    font-size: 15px; 
+    line-height: 1.5; 
+  }
+
+  .slider{ 
+    height: 50vh; 
+    min-height: 240px; 
+  }
+  .slide img{ 
+    object-position: center top; 
+  }
+
+  .ctrl{
+    width:52px; 
+    height:52px; 
+  }
+  .ctrl.left{ left:8px }
+  .ctrl.right{ right:8px }
+}
+
   </style>
 </head>
 <body>
