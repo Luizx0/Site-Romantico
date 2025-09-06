@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nós dois 💞</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1020;          
+      --card:#181a2e;        
+      --acc:#ff5f9e;        
+      --acc2:#7cf5ff;      
+      --txt:#eef2f6;        
+      --muted:#a9b0c3;    
+      --shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+    *{ box-sizing:border-box }
+    html,body{ height:100%; margin:0; }
+    body{
+      font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--txt);
+      background:radial-gradient(1000px 600px at 70% -10%, rgba(255,95,158,.18), transparent 60%),
+                 radial-gradient(900px 500px at -10% 100%, rgba(124,245,255,.12), transparent 60%),
+                 var(--bg);
+      display:flex; align-items:center; justify-content:center; padding:24px; 
+    }
+    .app{
+      width:min(1100px, 100%);
+      display:grid; gap:18px;
+      grid-template-columns: 1fr; 
+    }
+    header{
+      background:linear-gradient(135deg, rgba(24,26,46,.9), rgba(24,26,46,.7));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px; padding:20px 22px; box-shadow:var(--shadow);
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .title{
+      font-weight:700; letter-spacing:.3px; font-size:clamp(22px, 3vw, 30px);
+      display:flex; align-items:center; gap:10px;
+    }
+    .title .heart{ filter: drop-shadow(0 6px 14px rgba(255,95,158,.35)); }
+    .subtitle{ color:var(--muted); font-weight:400; font-size:14px }
+
+    /* Contador */
+    .counter{
+      background:linear-gradient(135deg, rgba(255,95,158,.12), rgba(124,245,255,.10));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px; padding:16px 18px; min-width:270px;
+      display:flex; flex-wrap:wrap; align-items:center; gap:10px; justify-content:center;
+    }
+    .since{ font-size:12px; color:var(--muted) }
+    .chips{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center }
+    .chip{
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08);
+      border-radius:999px; padding:8px 12px; font-size:13px; backdrop-filter: blur(6px);
+    }
+
+    /* Texto fofo */
+    .note{
+      background:linear-gradient(180deg, rgba(24,26,46,.9), rgba(24,26,46,.7));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px; padding:18px 20px; box-shadow:var(--shadow);
+      font-size:clamp(14px, 1.8vw, 16px); color:#eaeff8;
+    }
+    .note strong{ color:var(--acc); font-weight:700 }
+
+    /* Slider */
+    .card{
+      background:linear-gradient(180deg, rgba(24,26,46,.9), rgba(24,26,46,.7));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px; padding:14px; box-shadow:var(--shadow);
+    }
+    .slider{
+      position:relative; overflow:hidden; border-radius:16px; height:60vh; min-height:360px;
+      background:#0a0b18;
+    }
+    .track{ display:flex; height:100%; transition:transform .5s ease; }
+    .slide{ min-width:100%; height:100%; position:relative; }
+    .slide img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* Controles */
+    .ctrl{
+      position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+      background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.18);
+      color:white; width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
+      cursor:pointer; user-select:none; transition: .2s; backdrop-filter: blur(6px);
+    }
+    .ctrl:hover{ background:rgba(0,0,0,.55) }
+    .ctrl.left{ left:12px } .ctrl.right{ right:12px }
+
+    /* Dots */
+    .dots{ position:absolute; left:0; right:0; bottom:12px; display:flex; gap:8px; justify-content:center; z-index:5 }
+    .dot{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.35); cursor:pointer; transition:.2s }
+    .dot.active{ background:var(--acc); transform: scale(1.2) }
+
+    footer{ text-align:center; color:var(--muted); font-size:12px; margin-top:4px }
+
+    /* Responsivo */
+    @media (max-width: 640px){
+      header{ gap:8px }
+      .counter{ width:100% }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <div class="title">Nós dois <span class="heart">💖</span></div>
+        <div class="subtitle">Um cantinho para nossas memórias</div>
+      </div>
+
+      <section class="counter" aria-live="polite">
+        <div class="since">Juntos desde <strong>06/09/2024</strong></div>
+        <div class="chips" id="chips">
+          <!-- preenchido via JS: anos, meses, dias, horas, minutos, segundos -->
+        </div>
+      </section>
+    </header>
+
+    <section class="card note">
+      <p>
+        <strong>Você é meu lugar favorito</strong>. Obrigado por cada sorriso, cada foto e cada momento —
+        que este site seja um álbum do nosso amor, sempre crescendo lado a lado. 💫
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="slider" id="slider">
+        <button class="ctrl left" id="prev" aria-label="Anterior">❮</button>
+        <div class="track" id="track">
+          <!-- 📸 DICAS:
+            1) Substitua os src abaixo pelas suas fotos (arquivos locais na mesma pasta do HTML: ex: fotos/01.jpg)
+            2) Adicione ou remova <div class="slide"><img ...></div> conforme necessário.
+          -->
+          <div class="slide"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop" alt="Nós dois sorrindo"></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=1600&auto=format&fit=crop" alt="Passeio ao pôr do sol"></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1529336953121-d7f5d2d2c2b3?q=80&w=1600&auto=format&fit=crop" alt="Viagem especial"></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1475483768296-6163e08872a1?q=80&w=1600&auto=format&fit=crop" alt="Selfie divertida"></div>
+        </div>
+        <button class="ctrl right" id="next" aria-label="Próximo">❯</button>
+        <div class="dots" id="dots"></div>
+      </div>
+    </section>
+
+    <footer>
+      Feito com ❤ por vocês dois
+    </footer>
+  </main>
+
+  <script>
+    // =================== CONTADOR DE TEMPO DE NAMORO ===================
+    const start = new Date(2024, 8, 6, 0, 0, 0); // 06/09/2024 (mês é 0-index: 8 = setembro)
+    const chips = document.getElementById('chips');
+
+    function calcDurationParts(from, to){
+      // Calcula anos/meses/dias de forma humana (somando unidades até passar)
+      let a=0, m=0, d=0; let t = new Date(from);
+      // anos
+      while(true){
+        const next = new Date(t); next.setFullYear(next.getFullYear()+1);
+        if(next <= to){ a++; t = next; } else break;
+      }
+      // meses
+      while(true){
+        const next = new Date(t); next.setMonth(next.getMonth()+1);
+        if(next <= to){ m++; t = next; } else break;
+      }
+      // dias
+      while(true){
+        const next = new Date(t); next.setDate(next.getDate()+1);
+        if(next <= to){ d++; t = next; } else break;
+      }
+      // horas, minutos, segundos a partir do restante
+      let ms = to - t;
+      const h = Math.floor(ms / 3600000); ms %= 3600000;
+      const min = Math.floor(ms / 60000); ms %= 60000;
+      const s = Math.floor(ms / 1000);
+      return {a, m, d, h, min, s};
+    }
+
+    function pad(n){ return n.toString().padStart(2,'0'); }
+
+    function renderCounter(){
+      const now = new Date();
+      const {a, m, d, h, min, s} = calcDurationParts(start, now);
+      chips.innerHTML = `
+        <span class="chip">${a} ${a===1?'ano':'anos'}</span>
+        <span class="chip">${m} ${m===1?'mês':'meses'}</span>
+        <span class="chip">${d} ${d===1?'dia':'dias'}</span>
+        <span class="chip">${pad(h)}:${pad(min)}:${pad(s)}</span>
+      `;
+    }
+    renderCounter();
+    setInterval(renderCounter, 1000);
+
+    // =================== SLIDER DE FOTOS (cliques + teclado + toque) ===================
+    const track = document.getElementById('track');
+    const slides = Array.from(track.children);
+    const dotsWrap = document.getElementById('dots');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let index = 0;
+
+    function update(){
+      track.style.transform = `translateX(-${index * 100}%)`;
+      // dots
+      dotsWrap.querySelectorAll('.dot').forEach((d,i)=>{
+        d.classList.toggle('active', i===index);
+      });
+    }
+
+    // criar dots
+    slides.forEach((_,i)=>{
+      const dot = document.createElement('button');
+      dot.className = 'dot'; dot.setAttribute('aria-label', 'Ir para foto '+(i+1));
+      dot.addEventListener('click', ()=>{ index=i; update();});
+      dotsWrap.appendChild(dot);
+    });
+
+    function next(){ index = (index + 1) % slides.length; update(); }
+    function prev(){ index = (index - 1 + slides.length) % slides.length; update(); }
+
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+
+    // teclado
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight') next();
+      if(e.key === 'ArrowLeft') prev();
+    });
+
+    // toque (mobile)
+    let startX=0, moving=false;
+    track.addEventListener('touchstart', (e)=>{
+      startX = e.touches[0].clientX; moving=true;
+    }, {passive:true});
+    track.addEventListener('touchmove', (e)=>{
+      if(!moving) return; const x = e.touches[0].clientX;
+      const dx = x - startX; // opcional: arrasto visual
+    }, {passive:true});
+    track.addEventListener('touchend', (e)=>{
+      moving=false; const endX = (e.changedTouches[0]||{}).clientX || startX;
+      const dx = endX - startX;
+      const threshold = 40; // px
+      if(dx < -threshold) next();
+      if(dx > threshold) prev();
+    });
+
+    // autoplay opcional (comente se não quiser)
+    let auto = setInterval(next, 5000);
+    [nextBtn, prevBtn, track].forEach(el=>{
+      el.addEventListener('mouseenter', ()=> clearInterval(auto));
+      el.addEventListener('mouseleave', ()=> auto = setInterval(next, 5000));
+    });
+
+    // iniciar
+    update();
+  </script>
+</body>
+</html>
